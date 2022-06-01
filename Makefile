@@ -1,13 +1,24 @@
 
 
+CFLAGS = -Wall -I./src
 
+SRC_FILES = $(wildcard $(addsuffix /*.cpp, src))
+OBJ_FILES = $(patsubst %,./obj/%,$(notdir $(SRC_FILES:%.cpp=%.o)))
 
 all: app
 
 
 
-app: bin 	
-	g++ ./src/main.cpp -o bin/main
+app: $(OBJ_FILES) | bin
+	g++ $^ -o ./bin/main
+
+
+vpath %.cpp ./src
+
+./obj/%.o: %.cpp | obj
+	g++ $(CFLAGS) -c $< -o $@
+
+
 
 check:
 	valgrind --leak-check=yes ./bin/main
@@ -18,3 +29,6 @@ run: ./bin/main
 
 bin:
 	mkdir bin/
+
+obj:
+	mkdir obj/

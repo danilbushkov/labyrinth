@@ -8,6 +8,10 @@ using namespace std;
 
 int main(){
 
+    //init field and qtable
+    //menu learning and view
+    //free qtable
+
     int field[100];
     int cell;
 
@@ -29,9 +33,9 @@ int main(){
 
     in.close();
 
-    float **stateAction = new float*[j];
+    float **qtable = new float*[j];
     for(i = 0; i<j; ++i){
-        stateAction[i] = new float[4];
+        qtable[i] = new float[4];
     }
 
     in.open("./qtable.txt");
@@ -43,7 +47,7 @@ int main(){
         int m = 0;
         while(in >> k){
             if(i<j){
-                stateAction[i][m]=k;
+                qtable[i][m]=k;
             }
             if(m == 3){
                 m = 0;
@@ -69,8 +73,8 @@ int main(){
             
             //out << i << ' ';
             for(int k = 0; k<4; ++k){
-                //stateAction[i][k] = 0.0;
-                out << stateAction[i][k] << ' ';
+                //qtable[i][k] = 0.0;
+                out << qtable[i][k] << ' ';
             }
             out << endl;
         }
@@ -79,9 +83,9 @@ int main(){
     out.close();
 
     for(int i = 0; i<j; i++){
-        delete [] stateAction[i];
+        delete [] qtable[i];
     }
-    delete [] stateAction;
+    delete [] qtable;
 
 
     for(int i = 0; i<100; ++i){
