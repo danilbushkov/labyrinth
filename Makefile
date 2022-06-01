@@ -15,7 +15,7 @@ app: $(OBJ_FILES) | bin
 
 vpath %.cpp ./src
 
-./obj/%.o: %.cpp | obj
+./obj/%.o: %.cpp obj
 	g++ $(CFLAGS) -c $< -o $@
 
 
