@@ -4,6 +4,11 @@
 #include "environment.h"
 
 
+int Environment::isAgentCell(int cell){
+    return agentPosition == cell;
+}
+
+
 int Environment::getCountStates(){
     return countStates;
 }

@@ -7,6 +7,7 @@ class Environment{
         Environment();
         void show();
         int getCountStates();
+        int isAgentCell(int cell);
 
     private:
         int field[100];
