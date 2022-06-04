@@ -7,6 +7,7 @@ class Maze{
         ~Maze();
         void learning();
         void run();
+        void nullCountSteps();
 
     private:
         

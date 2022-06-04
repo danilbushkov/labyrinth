@@ -21,17 +21,18 @@ int showMenu(){
 int main(){
     Maze maze = Maze();
     int m;
-    {
+    do {
 
         m = showMenu();
         switch (m)
         {
             case 1:
                 maze.run();
+                maze.nullCountSteps();
                 break;
-            
             case 2:
                 maze.learning();
+                maze.nullCountSteps();
                 break;
         }
     }while(m!=3);

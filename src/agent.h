@@ -8,7 +8,10 @@ class Agent{
         ~Agent();
         void saveQTable();
         actions move();
+        float softmax(float u);
+        actions moveSoftmax();
         void analysis(moveResult m);
+        void setK(float k);
 
     private:
         float **qtable;
@@ -21,6 +24,7 @@ class Agent{
 
         const float LF = 0.9;
         const float DF = 0.9;
+        float K = 0.5;
         
 
 };

@@ -1,13 +1,20 @@
 #include <iostream>
+#include <unistd.h>
 #include "actions.h"
 #include "agent.h"
 #include "environment.h"
 #include "maze.h"
 
+void Maze::nullCountSteps(){
+    countSteps = 0;
+}
+
 
 void Maze::run(){
-    { 
+    agent->setK(0.00001);
+    do { 
         show();
+        sleep(1);
     }while(step());
     if(env->isAgentCell(9)){
         show();
@@ -18,20 +25,31 @@ void Maze::run(){
 }
 
 void Maze::learning(){
-    {
+    agent->setK(1);
+    do {
         step();
-        std::cout << countSteps << std::endl;
-    }while(env->isAgentCell(9));
+        std::cout << countSteps << "  "<< env->getAgentPosition() << std::endl;
+        if(countSteps%10000 == 0){
+            agent->saveQTable();
+        }
+    }while(!env->isAgentCell(9));
 
 }
 
 int Maze::step(){
-
-    return 0;
+    countSteps++;
+    actions action = agent->moveSoftmax();
+    moveResult m = env->evaluate(action);
+    agent->analysis(m);
+    if(m.reward < 0){
+        return 0;
+    }
+    
+    return 1;
 }
 
 void Maze::show(){
-    std::cout<<countSteps<<std::endl;
+    std::cout<< "step: "<< countSteps<<std::endl;
     env->show();
     std::cout<<std::endl;
 }

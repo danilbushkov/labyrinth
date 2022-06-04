@@ -8,21 +8,26 @@
 moveResult Environment::evaluate(actions action){
     moveResult r;
     r.reward = 0;
-    agentPosition = agentPosition + stepSize[action];
-    if(((action == up) && (agentPosition<0)) ||
-        ((action == down) && (agentPosition>99)) ||
-        ((action == left) && (agentPosition%10 == 0)) ||
-        ((action == right) && (agentPosition%10 == 9)) ||
-        (field[agentPosition]==-1)){
-            agentPosition = 90;
-            r.reward = -1;
+    int newAgentPosition = agentPosition + stepSize[action];
+    
+    if((newAgentPosition<0) ||
+        (newAgentPosition>99) ||
+        ((action == left) && (newAgentPosition%10 == 9)) ||
+        ((action == right) && (newAgentPosition%10 == 0))){
             
-    }else if(agentPosition == 10){
+        
+        r.reward = -1;
+
+    }else if((field[newAgentPosition]==-1)){
+        r.reward = -1;
+    }else if(newAgentPosition == 9){
+        //agentPosition = 90;
         r.reward = 1;
+    }else{
+        agentPosition = newAgentPosition;
     }
 
     r.state = field[agentPosition];
-
     return r;
 }
 
@@ -30,6 +35,10 @@ moveResult Environment::evaluate(actions action){
 
 int Environment::isAgentCell(int cell){
     return agentPosition == cell;
+}
+
+int Environment::getAgentPosition(){
+    return agentPosition;
 }
 
 

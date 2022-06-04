@@ -2,6 +2,9 @@
 #include <fstream>
 #include "actions.h"
 #include "agent.h"
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
 
 
 
@@ -16,14 +19,48 @@ actions Agent::move(){
     action = direction;
     return direction;
 }
+
+actions Agent::moveSoftmax(){
+    srand(time(nullptr));
+    int n = 1 + rand() % 100;
+    int p = 0;
+    actions direction = up;
+    for(int i=0; i<4; ++i){
+        p = p + round(softmax(qtable[state][i])*100);
+        if(p>=n){
+            direction = static_cast<actions>(i);
+            action = direction;
+            return direction;
+        }
+    }
+    action = direction;
+    return direction;
+}
+
+float Agent::softmax(float u){
+    return exp(u/K)/(exp(qtable[state][0]/K)+
+                   exp(qtable[state][1]/K)+
+                   exp(qtable[state][2]/K)+
+                   exp(qtable[state][3]/K));
+}
+
+void Agent::setK(float k){
+    K = k;
+}
+
+
+
 void Agent::analysis(moveResult m){
+    
     if((m.reward > 0) || (m.reward < 0)){
         qtable[state][action] = qtable[state][action] + m.reward;
-        state = m.state;
+        
     }else{
         qtable[state][action] = qtable[state][action] +
             LF*(m.reward+DF*max(m.state)-qtable[state][action]);
     }
+    state = m.state;
+    
 }
 
 float Agent::max(int state){
@@ -50,7 +87,7 @@ Agent::Agent(int countStates, int state){
 
 
 Agent::~Agent(){
-    saveQTable();
+    
 
     for(int i = 0; i<countStates; i++){
         delete [] qtable[i];

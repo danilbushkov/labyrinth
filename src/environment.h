@@ -9,6 +9,8 @@ class Environment{
         int getCountStates();
         int getAgentState();
         int isAgentCell(int cell);
+        moveResult evaluate(actions action);
+        int getAgentPosition();
 
     private:
         int field[100];
@@ -18,7 +20,7 @@ class Environment{
 
         void initField();
 
-        moveResult evaluate(actions action);
+        
 
 };
 
