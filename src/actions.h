@@ -2,11 +2,18 @@
 #define ACTIONS_H
 
 enum actions{
-    up,
-    down,
-    left,
-    right
+    up = 0,
+    down = 1,
+    left = 2,
+    right = 3
 };
+
+struct moveResult
+{
+    float reward;
+    int state;
+};
+
 
 
 #endif

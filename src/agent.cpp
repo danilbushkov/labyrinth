@@ -1,7 +1,38 @@
 #include <iostream>
 #include <fstream>
+#include "actions.h"
 #include "agent.h"
 
+
+
+
+actions Agent::move(){
+    actions direction = up;
+    for(int i=1; i<4; ++i){
+        if(qtable[state][direction]<qtable[state][i]){
+            direction = static_cast<actions>(i);
+        }
+    }
+    return direction;
+}
+void Agent::analysis(moveResult m){
+    if((m.state == -1) || (m.reward > 0)){
+        qtable[state][action] = qtable[state][action]+m.reward;
+    }else{
+        qtable[state][action] = qtable[state][action]+
+            LF*(m.reward+DF*max(m.state)-qtable[state][action]);
+    }
+}
+
+float Agent::max(int state){
+    float r = qtable[state][up];
+    for(int i = 1; i<4; ++i){
+        if(qtable[state][i]>r){
+            r = qtable[state][i];
+        }
+    }
+    return r;
+}
 
 Agent::Agent(int countStates){
     this->countStates = countStates;

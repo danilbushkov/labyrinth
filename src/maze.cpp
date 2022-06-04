@@ -1,4 +1,5 @@
 #include <iostream>
+#include "actions.h"
 #include "agent.h"
 #include "environment.h"
 #include "maze.h"
