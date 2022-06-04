@@ -40,7 +40,7 @@ void Maze::show(){
 
 Maze::Maze(){
     env = new Environment(); 
-    agent = new Agent(env->getCountStates());
+    agent = new Agent(env->getCountStates(), env->getAgentState());
 }
 
 

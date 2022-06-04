@@ -13,13 +13,15 @@ actions Agent::move(){
             direction = static_cast<actions>(i);
         }
     }
+    action = direction;
     return direction;
 }
 void Agent::analysis(moveResult m){
-    if((m.state == -1) || (m.reward > 0)){
-        qtable[state][action] = qtable[state][action]+m.reward;
+    if((m.reward > 0) || (m.reward < 0)){
+        qtable[state][action] = qtable[state][action] + m.reward;
+        state = m.state;
     }else{
-        qtable[state][action] = qtable[state][action]+
+        qtable[state][action] = qtable[state][action] +
             LF*(m.reward+DF*max(m.state)-qtable[state][action]);
     }
 }
@@ -34,8 +36,10 @@ float Agent::max(int state){
     return r;
 }
 
-Agent::Agent(int countStates){
+Agent::Agent(int countStates, int state){
     this->countStates = countStates;
+    this->state = state;
+
     qtable = new float*[countStates];
     for(int i = 0; i < countStates; ++i){
         qtable[i] = new float[4];
@@ -46,6 +50,8 @@ Agent::Agent(int countStates){
 
 
 Agent::~Agent(){
+    saveQTable();
+
     for(int i = 0; i<countStates; i++){
         delete [] qtable[i];
     }

@@ -1,7 +1,31 @@
 
 #include <fstream>
 #include <iostream>
+#include "actions.h"
 #include "environment.h"
+
+
+moveResult Environment::evaluate(actions action){
+    moveResult r;
+    r.reward = 0;
+    agentPosition = agentPosition + stepSize[action];
+    if(((action == up) && (agentPosition<0)) ||
+        ((action == down) && (agentPosition>99)) ||
+        ((action == left) && (agentPosition%10 == 0)) ||
+        ((action == right) && (agentPosition%10 == 9)) ||
+        (field[agentPosition]==-1)){
+            agentPosition = 90;
+            r.reward = -1;
+            
+    }else if(agentPosition == 10){
+        r.reward = 1;
+    }
+
+    r.state = field[agentPosition];
+
+    return r;
+}
+
 
 
 int Environment::isAgentCell(int cell){
@@ -11,6 +35,10 @@ int Environment::isAgentCell(int cell){
 
 int Environment::getCountStates(){
     return countStates;
+}
+
+int Environment::getAgentState(){
+    return field[agentPosition];
 }
 
 void Environment::show(){

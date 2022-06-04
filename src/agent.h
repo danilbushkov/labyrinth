@@ -4,7 +4,7 @@
 
 class Agent{
     public:
-        Agent(int countStates);
+        Agent(int countStates, int state);
         ~Agent();
         void saveQTable();
         actions move();

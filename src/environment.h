@@ -7,16 +7,18 @@ class Environment{
         Environment();
         void show();
         int getCountStates();
+        int getAgentState();
         int isAgentCell(int cell);
 
     private:
         int field[100];
         int agentPosition;
         int countStates;
+        int stepSize[4] = {-10, 10, -1, 1};
 
         void initField();
 
-    
+        moveResult evaluate(actions action);
 
 };
 
