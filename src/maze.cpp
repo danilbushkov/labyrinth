@@ -11,7 +11,8 @@ void Maze::nullCountSteps(){
 
 
 void Maze::run(){
-    agent->setK(0.00001);
+    agent->setK(1);
+    env->setAgentPostiton(90);
     do { 
         show();
         sleep(1);
@@ -26,10 +27,11 @@ void Maze::run(){
 
 void Maze::learning(){
     agent->setK(1);
+    env->setAgentPostiton(90);
     do {
         step();
         std::cout << countSteps << "  "<< env->getAgentPosition() << std::endl;
-        if(countSteps%10000 == 0){
+        if(countSteps%5 == 0){
             agent->saveQTable();
         }
     }while(!env->isAgentCell(9));

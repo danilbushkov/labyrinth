@@ -11,6 +11,7 @@ class Environment{
         int isAgentCell(int cell);
         moveResult evaluate(actions action);
         int getAgentPosition();
+        void setAgentPostiton(int position);
 
     private:
         int field[100];

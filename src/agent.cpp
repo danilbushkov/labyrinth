@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 #include "actions.h"
 #include "agent.h"
 #include <ctime>
@@ -21,7 +22,7 @@ actions Agent::move(){
 }
 
 actions Agent::moveSoftmax(){
-    srand(time(nullptr));
+    
     int n = 1 + rand() % 100;
     int p = 0;
     actions direction = up;
@@ -29,8 +30,7 @@ actions Agent::moveSoftmax(){
         p = p + round(softmax(qtable[state][i])*100);
         if(p>=n){
             direction = static_cast<actions>(i);
-            action = direction;
-            return direction;
+            break;
         }
     }
     action = direction;
@@ -74,6 +74,7 @@ float Agent::max(int state){
 }
 
 Agent::Agent(int countStates, int state){
+    srand(time(NULL));
     this->countStates = countStates;
     this->state = state;
 

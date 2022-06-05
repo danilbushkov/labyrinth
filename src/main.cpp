@@ -19,6 +19,7 @@ int showMenu(){
 }
 
 int main(){
+    
     Maze maze = Maze();
     int m;
     do {

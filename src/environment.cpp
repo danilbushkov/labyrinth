@@ -21,7 +21,7 @@ moveResult Environment::evaluate(actions action){
     }else if((field[newAgentPosition]==-1)){
         r.reward = -1;
     }else if(newAgentPosition == 9){
-        //agentPosition = 90;
+        agentPosition = newAgentPosition;
         r.reward = 1;
     }else{
         agentPosition = newAgentPosition;
@@ -31,6 +31,9 @@ moveResult Environment::evaluate(actions action){
     return r;
 }
 
+void Environment::setAgentPostiton(int position){
+    this->agentPosition = position;
+}
 
 
 int Environment::isAgentCell(int cell){
@@ -60,9 +63,10 @@ void Environment::show(){
             }else{
                 std::cout<<' ';
             }
-            if((i+1)%10==0){
-                std::cout<<'|'<<std::endl;
-            }
+            
+        }
+        if((i+1)%10==0){
+            std::cout<<'|'<<std::endl;
         }
         
     }
